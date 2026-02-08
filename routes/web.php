@@ -33,6 +33,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Articles
     Route::get('/articles', [DashboardController::class, 'articles'])->name('articles');
     Route::get('/articles/create', [DashboardController::class, 'createArticle'])->name('articles.create');
+    Route::post('/articles/classify', [DashboardController::class, 'classifyArticle'])->name('articles.classify');
     Route::post('/articles', [DashboardController::class, 'storeArticle'])->name('articles.store');
     Route::get('/articles/{article}/edit', [DashboardController::class, 'editArticle'])->name('articles.edit');
     Route::put('/articles/{article}', [DashboardController::class, 'updateArticle'])->name('articles.update');

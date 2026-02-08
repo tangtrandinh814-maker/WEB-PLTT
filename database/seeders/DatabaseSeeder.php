@@ -94,7 +94,7 @@ Tuy nhiên, cùng với những lợi ích đó, AI cũng đặt ra những thá
                 'is_published' => true,
                 'views_count' => 1250,
                 'ai_confidence_score' => 0.92,
-                'image_url' => 'https://via.placeholder.com/800x400?text=AI+Technology',
+                'image_url' => 'https://images.unsplash.com/photo-1677442d019cecf0f2e6c393a0b07f15?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Việt Nam giành huy chương vàng tại SEA Games 2026',
@@ -111,7 +111,7 @@ Bên cạnh đó, các vận động viên Việt Nam cũng đạt được thà
                 'is_published' => true,
                 'views_count' => 2100,
                 'ai_confidence_score' => 0.88,
-                'image_url' => 'https://via.placeholder.com/800x400?text=SEA+Games+2026',
+                'image_url' => 'https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Xu hướng sức khỏe tinh thần trong giới trẻ',
@@ -128,7 +128,7 @@ Các chuyên gia khuyên rằng cần tăng cường nhận thức về sức kh
                 'is_published' => true,
                 'views_count' => 850,
                 'ai_confidence_score' => 0.85,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Mental+Health',
+                'image_url' => 'https://images.unsplash.com/photo-1576091160550-112173faf246?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Kinh tế Việt Nam tăng trưởng 6,5% trong quý I',
@@ -145,7 +145,7 @@ Tuy nhiên, các chuyên gia kinh tế cũng chỉ ra những thách thức như
                 'is_published' => true,
                 'views_count' => 1650,
                 'ai_confidence_score' => 0.90,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Vietnam+Economy',
+                'image_url' => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Phim mới của đạo diễn nổi tiếng khiến khán giả thót tim',
@@ -162,7 +162,7 @@ Theo các nhận xét của giới phê bình, đây là một tác phẩm đi�
                 'is_published' => true,
                 'views_count' => 3200,
                 'ai_confidence_score' => 0.87,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Movie+Premiere',
+                'image_url' => 'https://images.unsplash.com/photo-1516606668158-b5b0f6f8a9ec?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Chương trình giáo dục mới giúp học sinh phát triển toàn diện',
@@ -179,7 +179,7 @@ Theo đánh giá ban đầu, chương trình mới này đã nhận được ph�
                 'is_published' => true,
                 'views_count' => 920,
                 'ai_confidence_score' => 0.86,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Education+Program',
+                'image_url' => 'https://images.unsplash.com/photo-1427504494785-cda0e4ddb604?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Tin tức pháp luật: Luật mới về bảo vệ môi trường',
@@ -196,7 +196,7 @@ Các chuyên gia môi trường đánh giá cao những nỗ lực này của Nh
                 'is_published' => true,
                 'views_count' => 640,
                 'ai_confidence_score' => 0.83,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Environmental+Law',
+                'image_url' => 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Xu hướng nội thất hiện đại cho nhà ở thao gọn',
@@ -213,7 +213,7 @@ Với những mẫu thiết kế này, các gia đình có thể tạo ra một 
                 'is_published' => true,
                 'views_count' => 780,
                 'ai_confidence_score' => 0.84,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Interior+Design',
+                'image_url' => 'https://images.unsplash.com/photo-1594736461245-aa84e801d877?w=800&h=400&fit=crop',
             ],
             [
                 'title' => 'Tin thế giới: Hội nghị khí hậu diễn ra tại Thụy Sĩ',
@@ -230,7 +230,7 @@ Các quốc gia đang thảo luận về các cam kết mới, nguồn tài chí
                 'is_published' => true,
                 'views_count' => 1450,
                 'ai_confidence_score' => 0.89,
-                'image_url' => 'https://via.placeholder.com/800x400?text=Climate+Conference',
+                'image_url' => 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
             ],
         ];
 

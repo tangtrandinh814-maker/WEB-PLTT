@@ -71,7 +71,7 @@
 
                         <!-- Content -->
                         <div class="article-content">
-                            {!! nl2br(e($article->content)) !!}
+                            {!! \App\Helpers\ArticleHelper::formatContent($article->content) !!}
                         </div>
 
                         <!-- Tags -->

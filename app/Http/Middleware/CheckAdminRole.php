@@ -4,23 +4,24 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Auth\AuthManager;
 
 class CheckAdminRole
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): mixed
     {
+        // Check if user is authenticated
         if (!auth()->check()) {
-            return redirect()->route('login');
+            return redirect()->route('login')
+                ->with('error', 'Vui lòng dang nh?p d? ti?p t?c');
         }
 
+        // Check if user is admin
         if (!auth()->user()->isAdmin()) {
-            abort(403, 'Unauthorized - Admin access required');
+            abort(403, 'B?n không có quy?n truy c?p trang này');
         }
 
         return $next($request);

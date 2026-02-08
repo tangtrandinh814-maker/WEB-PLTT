@@ -41,11 +41,12 @@
                     <thead class="table-light">
                         <tr>
                             <th width="5%">ID</th>
-                            <th width="30%">Tiêu đề</th>
-                            <th width="15%">Danh mục</th>
-                            <th width="15%">Nguồn</th>
-                            <th width="15%">Ngày tạo</th>
-                            <th width="20%">Hành động</th>
+                            <th width="10%">Hình ảnh</th>
+                            <th width="25%">Tiêu đề</th>
+                            <th width="12%">Danh mục</th>
+                            <th width="12%">Nguồn</th>
+                            <th width="12%">Ngày tạo</th>
+                            <th width="24%">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +54,18 @@
                             <tr>
                                 <td>{{ $article->id }}</td>
                                 <td>
-                                    <strong>{{ Str::limit($article->title, 50) }}</strong><br>
+                                    @if ($article->image_url)
+                                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}"
+                                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                    @else
+                                        <div
+                                            style="width: 50px; height: 50px; background: #e2e8f0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-image text-muted"></i>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <strong>{{ Str::limit($article->title, 35) }}</strong><br>
                                     <small class="text-muted">
                                         @if ($article->is_published)
                                             <span class="badge bg-success">Đã xuất bản</span>

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\StoreSourceRequest;
+use App\Http\Requests\UpdateSourceRequest;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Source;
@@ -195,17 +199,9 @@ class DashboardController extends Controller
     /**
      * Store new category
      */
-    public function storeCategory(Request $request): RedirectResponse
+    public function storeCategory(StoreCategoryRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
-            'description' => 'nullable|string',
-            'color' => 'nullable|string',
-            'icon' => 'nullable|string',
-            'order' => 'nullable|integer',
-        ]);
-
-        Category::create($validated);
+        Category::create($request->validated());
 
         return redirect()->route('admin.categories')->with('success', 'Đã thêm danh mục mới!');
     }
@@ -221,18 +217,9 @@ class DashboardController extends Controller
     /**
      * Update category
      */
-    public function updateCategory(Request $request, Category $category): RedirectResponse
+    public function updateCategory(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-            'description' => 'nullable|string',
-            'color' => 'nullable|string',
-            'icon' => 'nullable|string',
-            'order' => 'nullable|integer',
-            'is_active' => 'boolean',
-        ]);
-
-        $category->update($validated);
+        $category->update($request->validated());
 
         return redirect()->route('admin.categories')->with('success', 'Đã cập nhật danh mục!');
     }
@@ -257,17 +244,9 @@ class DashboardController extends Controller
     /**
      * Store new source
      */
-    public function storeSource(Request $request): RedirectResponse
+    public function storeSource(StoreSourceRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:sources,name',
-            'url' => 'required|url|unique:sources,url',
-            'rss_url' => 'nullable|url',
-            'logo' => 'nullable|url',
-            'crawl_frequency' => 'nullable|integer',
-        ]);
-
-        Source::create($validated);
+        Source::create($request->validated());
 
         return redirect()->route('admin.sources')->with('success', 'Đã thêm nguồn tin mới!');
     }
@@ -316,6 +295,49 @@ class DashboardController extends Controller
         $categories = Category::active()->ordered()->get();
         $sources = Source::where('is_active', true)->get();
         return view('admin.articles.create', compact('categories', 'sources'));
+    }
+
+    /**
+     * Classify article using AI
+     */
+    public function classifyArticle(Request $request, AIClassifierService $aiService): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'content' => 'required|string|min:20',
+            ]);
+
+            // Use AI Service to classify
+            $result = $aiService->classifyArticle($validated['title'], $validated['content']);
+
+            // Get category name if found
+            $categoryName = null;
+            $categoryColor = null;
+            if ($result['category_id']) {
+                $category = Category::find($result['category_id']);
+                $categoryName = $category?->name;
+                $categoryColor = $category?->color ?? '#3b82f6';
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'category_id' => $result['category_id'],
+                    'category_name' => $categoryName ?? 'Chưa xác định',
+                    'category_color' => $categoryColor,
+                    'confidence_score' => round($result['confidence_score'] * 100, 2),
+                    'summary' => $result['summary'] ?? '',
+                    'tags' => $result['tags'] ?? [],
+                ]
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Article Classification Error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Lỗi khi phân loại: ' . $e->getMessage()
+            ], 400);
+        }
     }
 
     /**

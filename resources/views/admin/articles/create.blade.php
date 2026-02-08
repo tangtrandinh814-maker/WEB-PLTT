@@ -32,11 +32,30 @@
 
                     <div class="mb-3">
                         <label class="form-label">Tiêu đề bài viết *</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                            value="{{ old('title') }}" required>
+                        <div class="input-group">
+                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
+                                id="title" value="{{ old('title') }}" required>
+                            <button class="btn btn-outline-info" type="button" id="aiClassifyBtn">
+                                <i class="fas fa-wand-magic-wand"></i> Phân loại AI
+                            </button>
+                        </div>
                         @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    <!-- AI Classification Result -->
+                    <div id="aiResultAlert" class="alert alert-info alert-dismissible fade show" role="alert"
+                        style="display:none;">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="mb-2"><i class="fas fa-sparkles"></i> Kết quả phân loại AI</h5>
+                                <div id="aiResultContent"></div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -144,4 +163,86 @@
             </div>
         </div>
     </div>
-@endsection
+
+    <script>
+        document.getElementById('aiClassifyBtn').addEventListener('click', async function() {
+            const title = document.getElementById('title').value;
+            const content = document.querySelector('textarea[name="content"]').value;
+
+            // Validate inputs
+            if (!title.trim() || content.trim().length < 20) {
+                alert('Vui lòng nhập tiêu đề và nội dung ít nhất 20 ký tự');
+                return;
+            }
+
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang phân loại...';
+
+            try {
+                const response = await fetch('{{ route('admin.articles.classify') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        title,
+                        content
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.data.category_id) {
+                    // Update form with AI result
+                    document.querySelector('select[name="category_id"]').value = data.data.category_id;
+
+                    // Show result alert
+                    const resultAlert = document.getElementById('aiResultAlert');
+                    const resultContent = document.getElementById('aiResultContent');
+
+                    resultContent.innerHTML = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2">
+                                    <strong>Danh mục:</strong>
+                                    <span class="badge" style="background-color: ${data.data.category_color}">
+                                        ${data.data.category_name}
+                                    </span>
+                                </p>
+                                <p class="mb-2">
+                                    <strong>Độ tin cậy:</strong>
+                                    <span class="badge bg-success">${data.data.confidence_score}%</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                ${data.data.tags.length > 0 ? `
+                                        <p class="mb-2">
+                                            <strong>Từ khóa:</strong>
+                                            ${data.data.tags.map(tag => `<span class="badge bg-secondary">${tag}</span>`).join(' ')}
+                                        </p>
+                                    ` : ''}
+                            </div>
+                        </div>
+                        ${data.data.summary ? `
+                                <p class="mt-2 mb-0">
+                                    <strong>Tóm tắt gợi ý:</strong><br>
+                                    ${data.data.summary}
+                                </p>
+                            ` : ''}
+                    `;
+
+                    resultAlert.style.display = 'block';
+                } else {
+                    alert('Không thể phân loại bài viết. Vui lòng chọn danh mục thủ công.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Lỗi khi gửi yêu cầu: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-wand-magic-wand"></i> Phân loại AI';
+            }
+        });
+    </script>
