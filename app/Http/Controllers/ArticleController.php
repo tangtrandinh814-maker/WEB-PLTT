@@ -23,6 +23,17 @@ class ArticleController extends Controller
             ->take(5)
             ->get();
 
+        // Fallback: if no featured articles, use latest published articles with images
+        if ($featuredArticles->isEmpty()) {
+            $featuredArticles = Article::published()
+                ->whereNotNull('image_url')
+                ->where('image_url', '!=', '')
+                ->with(['category', 'source'])
+                ->latest('published_at')
+                ->take(5)
+                ->get();
+        }
+
         $latestArticles = Article::published()
             ->with(['category', 'source'])
             ->latest('published_at')

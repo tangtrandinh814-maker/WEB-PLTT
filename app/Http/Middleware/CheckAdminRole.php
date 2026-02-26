@@ -16,12 +16,12 @@ class CheckAdminRole
         // Check if user is authenticated
         if (!auth()->check()) {
             return redirect()->route('login')
-                ->with('error', 'Vui l�ng dang nh?p d? ti?p t?c');
+                ->with('error', 'Vui lòng đăng nhập để tiếp tục');
         }
 
         // Check if user is admin
         if (!auth()->user()->isAdmin()) {
-            abort(403, 'B?n kh�ng c� quy?n truy c?p trang n�y');
+            abort(403, 'Bạn không có quyền truy cập trang này');
         }
 
         return $next($request);

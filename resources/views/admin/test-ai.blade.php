@@ -1,88 +1,81 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Admin - Test AI Classification')
+@section('admin-title', 'Admin - Test AI Classification')
 
-@section('content')
-    <div class="container-fluid mt-4">
-        <div class="row mb-4">
-            <div class="col-md-8">
-                <h2><i class="fas fa-robot"></i> Test AI Classification</h2>
-                <p class="text-muted">Nhập tiêu đề và nội dung để test hệ thống phân loại AI</p>
+@section('admin-content')
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2><i class="fas fa-robot"></i> Test AI Classification</h2>
+            <p class="text-muted">Nhập tiêu đề và nội dung để test hệ thống phân loại AI</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Input Form -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Nhập thông tin bài viết</h5>
+                </div>
+                <div class="card-body">
+                    <form id="aiTestForm">
+                        <div class="mb-3">
+                            <label class="form-label">Tiêu đề bài viết *</label>
+                            <input type="text" class="form-control" id="title" name="title"
+                                placeholder="Ví dụ: Hôm nay là ngày đẹp trời..." required>
+                            <small class="text-muted">Nhập tiêu đề bài viết cần phân loại</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nội dung bài viết *</label>
+                            <textarea class="form-control" id="content" name="content" rows="8"
+                                placeholder="Nhập nội dung bài viết (tối thiểu 50 ký tự)..." required></textarea>
+                            <small class="text-muted">Nhập nội dung hoặc tóm tắt của bài viết</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-magic"></i> Test AI Classification
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="col-md-4 text-end">
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay lại
-                </a>
+
+            <!-- Quick Test Examples -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Ví dụ nhanh</h5>
+                </div>
+                <div class="btn-group-vertical w-100" role="group">
+                    <button type="button" class="btn btn-light text-start" onclick="loadExample(1)">
+                        <strong>🏋️ Thể thao</strong><br>
+                        <small>Nội dung về bóng đá, bóng chuyền...</small>
+                    </button>
+                    <button type="button" class="btn btn-light text-start border-top" onclick="loadExample(2)">
+                        <strong>💻 Công nghệ</strong><br>
+                        <small>Nội dung về AI, Python, Web...</small>
+                    </button>
+                    <button type="button" class="btn btn-light text-start border-top" onclick="loadExample(3)">
+                        <strong>💼 Kinh doanh</strong><br>
+                        <small>Nội dung về tài chính, doanh nghiệp...</small>
+                    </button>
+                    <button type="button" class="btn btn-light text-start border-top" onclick="loadExample(4)">
+                        <strong>🏥 Sức khỏe</strong><br>
+                        <small>Nội dung về y tế, sức khỏe...</small>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <!-- Input Form -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Nhập thông tin bài viết</h5>
-                    </div>
-                    <div class="card-body">
-                        <form id="aiTestForm">
-                            <div class="mb-3">
-                                <label class="form-label">Tiêu đề bài viết *</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                    placeholder="Ví dụ: Hôm nay là ngày đẹp trời..." required>
-                                <small class="text-muted">Nhập tiêu đề bài viết cần phân loại</small>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Nội dung bài viết *</label>
-                                <textarea class="form-control" id="content" name="content" rows="8"
-                                    placeholder="Nhập nội dung bài viết (tối thiểu 50 ký tự)..." required></textarea>
-                                <small class="text-muted">Nhập nội dung hoặc tóm tắt của bài viết</small>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-magic"></i> Test AI Classification
-                            </button>
-                        </form>
-                    </div>
+        <!-- Result Display -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Kết quả phân loại</h5>
                 </div>
-
-                <!-- Quick Test Examples -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h5 class="mb-0">Ví dụ nhanh</h5>
-                    </div>
-                    <div class="btn-group-vertical w-100" role="group">
-                        <button type="button" class="btn btn-light text-start" onclick="loadExample(1)">
-                            <strong>🏋️ Thể thao</strong><br>
-                            <small>Nội dung về bóng đá, bóng chuyền...</small>
-                        </button>
-                        <button type="button" class="btn btn-light text-start border-top" onclick="loadExample(2)">
-                            <strong>💻 Công nghệ</strong><br>
-                            <small>Nội dung về AI, Python, Web...</small>
-                        </button>
-                        <button type="button" class="btn btn-light text-start border-top" onclick="loadExample(3)">
-                            <strong>💼 Kinh doanh</strong><br>
-                            <small>Nội dung về tài chính, doanh nghiệp...</small>
-                        </button>
-                        <button type="button" class="btn btn-light text-start border-top" onclick="loadExample(4)">
-                            <strong>🏥 Sức khỏe</strong><br>
-                            <small>Nội dung về y tế, sức khỏe...</small>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Result Display -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Kết quả phân loại</h5>
-                    </div>
-                    <div class="card-body" id="resultContent" style="min-height: 400px;">
-                        <div class="text-center text-muted py-5">
-                            <p><i class="fas fa-arrow-left"></i></p>
-                            <p>Nhập thông tin bài viết và nhấn "Test AI Classification" để xem kết quả</p>
-                        </div>
+                <div class="card-body" id="resultContent" style="min-height: 400px;">
+                    <div class="text-center text-muted py-5">
+                        <p><i class="fas fa-arrow-left"></i></p>
+                        <p>Nhập thông tin bài viết và nhấn "Test AI Classification" để xem kết quả</p>
                     </div>
                 </div>
             </div>

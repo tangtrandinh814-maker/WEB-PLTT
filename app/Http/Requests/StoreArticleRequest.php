@@ -39,18 +39,18 @@ class StoreArticleRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Ti�u d? b�i vi?t l� b?t bu?c',
-            'title.min' => 'Ti�u d? ph?i c� �t nh?t 10 k� t?',
-            'title.max' => 'Ti�u d? kh�ng du?c vu?t qu� 255 k� t?',
-            'category_id.required' => 'Vui l�ng ch?n danh m?c',
-            'category_id.exists' => 'Danh m?c du?c ch?n kh�ng t?n t?i',
-            'content.required' => 'N?i dung b�i vi?t l� b?t bu?c',
-            'content.min' => 'N?i dung ph?i c� �t nh?t 100 k� t?',
-            'image.image' => 'T?p ph?i l� m?t h�nh ?nh',
-            'image.mimes' => 'H�nh ?nh ph?i l� JPEG, PNG, WebP ho?c GIF',
-            'image.max' => 'K�ch thu?c h�nh ?nh kh�ng du?c vu?t qu� 5MB',
-            'image_url.url' => 'URL h�nh ?nh kh�ng h?p l?',
-            'author.max' => 'T�n t�c gi? kh�ng du?c vu?t qu� 255 k� t?',
+            'title.required' => 'Tiêu đề bài viết là bắt buộc',
+            'title.min' => 'Tiêu đề phải có ít nhất 10 ký tự',
+            'title.max' => 'Tiêu đề không được vượt quá 255 ký tự',
+            'category_id.required' => 'Vui lòng chọn danh mục',
+            'category_id.exists' => 'Danh mục được chọn không tồn tại',
+            'content.required' => 'Nội dung bài viết là bắt buộc',
+            'content.min' => 'Nội dung phải có ít nhất 100 ký tự',
+            'image.image' => 'Tập phải là một hình ảnh',
+            'image.mimes' => 'Hình ảnh phải là JPEG, PNG, WebP hoặc GIF',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 5MB',
+            'image_url.url' => 'URL hình ảnh không hợp lệ',
+            'author.max' => 'Tên tác giả không được vượt quá 255 ký tự',
         ];
     }
 

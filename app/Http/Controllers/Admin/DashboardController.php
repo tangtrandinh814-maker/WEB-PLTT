@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Source;
 use App\Services\AIClassifierService;
 use App\Services\NewsCrawlerService;
+use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -20,6 +21,7 @@ use Illuminate\Http\JsonResponse;
 
 class DashboardController extends Controller
 {
+    use HandlesImageUpload;
     /**
      * Show admin dashboard
      */
@@ -104,7 +106,22 @@ class DashboardController extends Controller
             'summary' => 'nullable',
             'is_published' => 'boolean',
             'is_featured' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,gif,webp|max:5120',
         ]);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old images if they exist
+            if ($article->image_url) {
+                $this->deleteImages($article->image_url);
+            }
+
+            // Upload new image
+            $uploadResult = $this->uploadImage($request->file('image'));
+            if ($uploadResult['image_path']) {
+                $validated['image_url'] = asset('storage/' . $uploadResult['image_path']);
+            }
+        }
 
         $article->update($validated);
 

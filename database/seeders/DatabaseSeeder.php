@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create admin user
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@news.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@news.com'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+                'role' => 'admin',
+            ]
+        );
 
         // Create categories
         $categories = [
@@ -247,10 +249,10 @@ Các quốc gia đang thảo luận về các cam kết mới, nguồn tài chí
             Article::create(array_merge($article, [
                 'slug' => Str::slug($article['title']),
                 'original_url' => $sourceUrl . '/' . Str::slug($article['title']),
-                'ai_metadata' => [
+                'ai_metadata' => json_encode([
                     'sentiment' => ['positive', 'neutral', 'negative'][array_rand([0, 1, 2])],
                     'ai_provider' => 'gemini',
-                ],
+                ]),
             ]));
         }
 

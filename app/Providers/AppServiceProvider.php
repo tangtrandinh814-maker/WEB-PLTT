@@ -8,6 +8,7 @@ use App\Repositories\ArticleRepository;
 use App\Services\ArticleService;
 use App\Services\AIClassifierService;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,5 +43,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Set default string length for migrations
         Schema::defaultStringLength(191);
+
+        // Use Bootstrap 5 pagination styling
+        Paginator::useBootstrapFive();
     }
 }

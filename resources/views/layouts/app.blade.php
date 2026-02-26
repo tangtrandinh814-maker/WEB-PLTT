@@ -104,21 +104,22 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav me-auto flex-nowrap">
                     @foreach (\App\Models\Category::active()->ordered()->limit(6)->get() as $cat)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('category.show', $cat->slug) }}"
-                                style="color: rgba(255,255,255,0.85); font-weight: 500;">
-                                {{ $cat->icon }} <span class="d-none d-lg-inline">{{ $cat->name }}</span>
+                            <a class="nav-link px-2 py-1" href="{{ route('category.show', $cat->slug) }}"
+                                style="white-space: nowrap; font-size: 0.88rem;">
+                                {{ $cat->icon }} {{ $cat->name }}
                             </a>
                         </li>
                     @endforeach
                 </ul>
 
-                <form class="d-flex me-3 mb-3 mb-lg-0" action="{{ route('search') }}" method="GET">
+                <form class="d-flex me-2 mb-2 mb-lg-0 flex-shrink-0" action="{{ route('search') }}" method="GET"
+                    style="min-width: 140px; max-width: 200px;">
                     <input class="form-control form-control-sm" type="search" name="q" placeholder="Tìm kiếm..."
                         value="{{ request('q') }}"
-                        style="border-radius: 0.5rem 0 0 0.5rem; background: rgba(255,255,255,0.95);">
+                        style="border-radius: 0.5rem 0 0 0.5rem; background: rgba(255,255,255,0.95); font-size: 0.85rem;">
                     <button class="btn btn-light btn-sm" type="submit" style="border-radius: 0 0.5rem 0.5rem 0;">
                         <i class="fas fa-search"></i>
                     </button>
@@ -156,8 +157,16 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}"
-                                style="color: rgba(255,255,255,0.85); font-weight: 500;">Đăng nhập</a>
+                            <a class="nav-link px-2 py-1" href="{{ route('login') }}"
+                                style="white-space: nowrap; font-size: 0.88rem;">
+                                <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light btn-sm ms-1 px-2 py-1" href="{{ route('register') }}"
+                                style="font-weight: 600; border-radius: 0.5rem; white-space: nowrap; font-size: 0.85rem;">
+                                <i class="fas fa-user-plus me-1"></i>Đăng ký
+                            </a>
                         </li>
                     @endauth
                 </ul>

@@ -202,5 +202,32 @@
         .article-content p {
             margin-bottom: 1.5rem;
         }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto !important;
+            width: auto;
+            display: block;
+            margin: 1rem auto;
+            border-radius: 8px;
+        }
+
+        .article-content figure {
+            max-width: 100%;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .article-content figure img {
+            margin: 0 auto 0.5rem;
+        }
+
+        .article-content figcaption {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-style: italic;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
     </style>
 @endpush
